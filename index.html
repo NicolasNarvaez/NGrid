@@ -16,6 +16,8 @@
 
 	<script id='vs' type='vs'>
   attribute vec4 a_position;
+  highp float a_position_v;
+  highp float a_position_tmp;
   attribute vec4 a_color;
 
   uniform mat4 uPMVMatrix1;
@@ -30,41 +32,70 @@
     //those that cant get to fit, should be added to other places,
     //anyway, thats a lot further by now...
 
-    //convert to NDC
-    gl_Position = uPMVMatrix1*a_position;
+    /////////////////////////////////////////////////////////////////convert to NDC 4D
     //currently, a_position.v will always be 1 when vertices reach here
-    gl_Position.x += uPMVMatrix2[1][0];
-    gl_Position.y += uPMVMatrix2[1][1];
-    gl_Position.z += uPMVMatrix2[1][2];
-    gl_Position.w += uPMVMatrix2[1][3];
 
-    highp float a_position_v = uPMVMatrix2[0][0]*a_position.x + uPMVMatrix2[1][0]*a_position.y +
-    uPMVMatrix2[2][0]*a_position.z + uPMVMatrix2[3][0]*a_position.w + uPMVMatrix2[0][2];
+    //gl_Position = uPMVMatrix * gl_Position
+      gl_Position = uPMVMatrix1*a_position;
+      gl_Position.x += uPMVMatrix2[0][1];
+      gl_Position.y += uPMVMatrix2[1][1];
+      gl_Position.z += uPMVMatrix2[2][1];
+      gl_Position.w += uPMVMatrix2[3][1];
+      //final, homogenous coordinate
+      a_position_v = uPMVMatrix2[0][0]*a_position.x + uPMVMatrix2[1][0]*a_position.y +
+      uPMVMatrix2[2][0]*a_position.z + uPMVMatrix2[3][0]*a_position.w + uPMVMatrix2[0][2];
 
     //use homogenous cooordinate
     gl_Position /= a_position_v;
+
+    //just... this!: https://soundcloud.com/kellerkind/sets/dj-mixes
+    gl_Position.w *= a_position_v; //repair depth coordinate to generate linear distribution
+
+    a_position_v = gl_Position.w; //store depth value
     //already in NDC !!!
 
-    a_position_v = gl_Position.w;
-
-    //convert to 3D eyespace
-    gl_Position.z += -1.0;
+    /////////////////////////////////////////////////////////////////convert to 3D eyespace
+    gl_Position.z += 2.0;
     gl_Position *= 50.0;
     gl_Position.w = 1.0;
-    //gl_Position.x += 10.0;
-    //convert to NDC
+
+    /////////////////////////////////////////////////////////////////convert to NDC 3D
     gl_Position = uPMVMatrix3D*gl_Position; //doing *= will do the operation row-vertor type...
     //yes, like if it where fucking undebuggable transposed shit.
 
-    //if(a_position_v > 1.0 || a_position_v < -1.0)
-        // gl_Position.z = 1000.0*gl_Position.w;
+    // calculations are realized in the 4th and not the 3th, like face superposition
+    //blendeing, etc.
     vColor = a_color;
+
+    a_position_tmp = gl_Position.w; //store depth value
+    gl_Position /= gl_Position.w;
+    //manual culling
+    //gl_Position.z += 1.0;
+    if(
+      a_position_v >= 5.0 ||
+      a_position_v <= -1.0 ||
+
+      gl_Position.x >= 10.0 ||
+      gl_Position.x <= -10.0 ||
+      gl_Position.y >= 10.0 ||
+      gl_Position.y <= -10.0  ||
+      gl_Position.z >= 10.0 ||
+      gl_Position.z <= -10.0
+      ) {
+
+      gl_Position.z = 10000.0*gl_Position.w;
+    }
+    else {
+      gl_Position.z = a_position_v; //this will allow that all depth related
+      //vColor.a *= (5.0 - gl_Position.z)/(5.0);
+    }
+    gl_Position *= a_position_tmp;
+
   }
 
 	</script>
 	<script id='fs' type='fs'>
 	varying highp vec4 vColor;
-
 	void main(void) {
 	    gl_FragColor = vColor;
 	}
@@ -76,6 +107,7 @@
 
 	<link rel='stylesheet' type='text/css' href='style.css'>
 	<script type='text/javascript' src='lib/gl-matrix-min.js' ></script>
+  <script type='text/javascript' src='lib/NMath.js' ></script>
   <script type='text/javascript' src='lib/twgl-full.min.js' ></script>
 	<script type='text/javascript' src='lib/NEngine.js' ></script>
 	<script type='text/javascript' src='lib/NGrid.js' ></script>
