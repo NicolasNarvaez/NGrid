@@ -29,8 +29,6 @@
     //going down, filling vertically, for first column, then 2, etc, and
     //those that cant get to fit, should be added to other places,
     //anyway, thats a lot further by now...
-    highp float a_position_v = uPMVMatrix2[0][0]*a_position.x + uPMVMatrix2[1][0]*a_position.y +
-    uPMVMatrix2[2][0]*a_position.z + uPMVMatrix2[3][0]*a_position.w + uPMVMatrix2[0][2];
 
     //convert to NDC
     gl_Position = uPMVMatrix1*a_position;
@@ -40,39 +38,24 @@
     gl_Position.z += uPMVMatrix2[1][2];
     gl_Position.w += uPMVMatrix2[1][3];
 
+    highp float a_position_v = uPMVMatrix2[0][0]*a_position.x + uPMVMatrix2[1][0]*a_position.y +
+    uPMVMatrix2[2][0]*a_position.z + uPMVMatrix2[3][0]*a_position.w + uPMVMatrix2[0][2];
+
     //use homogenous cooordinate
     gl_Position /= a_position_v;
     //already in NDC !!!
 
+    a_position_v = gl_Position.w;
+
     //convert to 3D eyespace
     gl_Position.z += -1.0;
-    gl_Position *= 100.0;
+    gl_Position *= 50.0;
     gl_Position.w = 1.0;
     //convert to NDC
     gl_Position *= uPMVMatrix3D;
 
-    /*
-    gl_Position = vec4(
-      //uPMVMatrix1[0][0]*a_position.x + uPMVMatrix1[0][1],
-      uPMVMatrix1[0][0]*a_position.x + uPMVMatrix1[0][1]*a_position.y +
-      uPMVMatrix1[0][2]*a_position.z + uPMVMatrix1[0][3]*a_position.w +
-      uPMVMatrix2[0][0],//v always values = 1, like w=1 in 3d
-      //0,
-      uPMVMatrix1[1][0]*a_position.x + uPMVMatrix1[1][1]*a_position.y +
-      uPMVMatrix1[1][2]*a_position.z + uPMVMatrix1[1][3]*a_position.w +
-      uPMVMatrix2[0][1],
-      //0,
-      uPMVMatrix1[2][0]*a_position.x + uPMVMatrix1[2][1]*a_position.y +
-      uPMVMatrix1[2][2]*a_position.z + uPMVMatrix1[2][3]*a_position.w +
-      uPMVMatrix2[0][2],
-      //0,
-      uPMVMatrix1[3][0]*a_position.x + uPMVMatrix1[3][1]*a_position.y +
-      uPMVMatrix1[3][2]*a_position.z + uPMVMatrix1[3][3]*a_position.w +
-      uPMVMatrix2[0][3]
-
-      //uPMVMatrix2[0]*a_position + uPMVMatrix2[2][0] we arent goint to process any n-depth-data yet
-    );
-    */
+    //if(a_position_v > 1.0 || a_position_v < -1.0)
+        // gl_Position.z = 1000.0*gl_Position.w;
     vColor = a_color;
   }
 
