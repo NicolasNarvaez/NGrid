@@ -53,7 +53,8 @@
     gl_Position.w = 1.0;
     //gl_Position.x += 10.0;
     //convert to NDC
-    gl_Position = uPMVMatrix3D*gl_Position;
+    gl_Position = uPMVMatrix3D*gl_Position; //doing *= will do the operation row-vertor type...
+    //yes, like if it where fucking undebuggable transposed shit.
 
     //if(a_position_v > 1.0 || a_position_v < -1.0)
         // gl_Position.z = 1000.0*gl_Position.w;
