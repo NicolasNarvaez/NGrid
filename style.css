@@ -28,3 +28,35 @@ div {
 	height: 100%;
 	background-color: #5af;
 }
+
+div.info-basic-panel {
+	width: 48vw;
+	box-shadow: 0px 0px 2000px 150px #000 inset;
+	background-color: rgba(0.3, 0.3, 0.3, 0.6);
+	color: #3fe;
+	top: 0;
+	font-size: 0.8em;
+	position:absolute;
+	z-index: 10;
+}
+
+#info-basic-es {
+	left: 0;
+}
+#info-basic-en {
+	right: 0;
+}
+
+#info-basic-buttons {
+	padding: 2px;
+	position: absolute;
+	left: 0;
+	top:10vh;
+	box-shadow: 0 0 1000px 20px #000 inset;
+	/*box-shadow: 0 0 10px 5px #000;*/
+}
+
+.hide {
+	opacity:0.0;
+	display:none;
+}

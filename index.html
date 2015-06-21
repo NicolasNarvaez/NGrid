@@ -99,6 +99,115 @@
 	    gl_FragColor = vColor;
 	}
 	</script>
+</head>
+
+<body>
+  <div id='info-basic-es' class='info-basic-panel info hide'>
+    <h3>Intro al Hipermundo - Espa&ntilde;ol (alternar info: i, reiniciar pagina: f5)</h3>
+    Por que hay dos imagenes? : para el 3D, puedes cruzar tus ojos y superponer las imagenes, o conseguirte
+    un dispositivos que lo soporte para usar el 3D aprovechando tu pantalla completa. Para aprender
+    el metodo anterior de estereoscopia, que no necesita lentes 3D o pantallas 3D, as click
+    <a href='http://www.taringa.net/posts/info/9454054/Te-enseno-a-ver-en-3D-sin-lentes.html'>
+      aca!</a>, o busca algun recurso por internet ...<br/>
+    Interpreta este lugar como un oceano cuartidimensional casi infinito, limitado
+    por la m&aacute;xima precisi&oacute;n que tu computadora de al punto flotante, y lleno de
+    peque&ntilde;os pecesitos hipercubicos. Las lineas mas grandes, son un grid, una malla
+    similar a la rejilla de los cuadernos, pero en 4D, es decir que en ves de una rejilla de
+    cuadrados contiguos en sus dos ejes, esta es una rejilla de hipercubos contiguos en sus 4 ejes.
+    Lo puse aqu&iacute; tratando de tener un elemento de referencia al desplazarse.
+
+    <h4>Movimiento : </h4>
+    En 4D hay un eje extra de movimiento (O: lol /o/ /o/  \o\ \o\), esto se analizo de la siguiente manera: <br/>
+    Para un organismo que evoluciona en 4D, este probablemente lo hizo sobre una "superficie", esta anclado
+    a un objeto de mayor volumen, sobre el que se desplaza, lo que implica que tiene un eje vertical ("inusable") y tres
+    de movimiento horizontal, a diferencia de dos en los organismos 3d, por lo tanto hay un eje que va en la
+    direccion del movimiento (w) (frontal), y dos ejes de movimiento horizontal perpendiculares a este (z y x), ademas
+    del eje vertical (y), esto hace que ademas de flechas izquierda y derecha, haya que agregar dos mas para el nuevo
+    eje perpendicular al de desplazamiento, asi las flechas serian: eje x: a:izquierda, e: derecha. eje z:
+    q izquierda: d: derecha, ademas del tradicional eje de movimiento frontal: s: atras, w: adelante. <br/> <br/>
+    Esto no limita tu movimiento vertical en este demo, solo mira hacia arriba, y desplazate.
+    <h4>Rotacion : </h4>
+    En 4D el campo visual no es un plano, es un volumen, esto tiene varias implicancias: <br/>
+    4D tiene 3 ejes de rotacion del campo visual (3D tiene 2: vertical-zy horizontal-zx) <br/>
+    El mouse rota por defecto en 4D horizontal1 (wx) en el eje horizontal y 4D horizontal2 (wz) en el eje vertical  <br/>
+    Para rotar en el eje 4D vertical-wy mueve el mouse verticalmente con click secundario presionado <br/>
+    <br/>
+    Esto implica que los objetos al alejarse de la camara, encojen sus volumenes de proyeccion, no sus planos (como en 3D). <br/>
+    Puedes ver que los volumenes que estaban en los extremos del volumen visual se encojen al pasar por el punto focal
+    y luego vuelven a agrandarze al alejarse del punto focal, esto es lo mismo que pasa cuando el campo visual es
+    un plano, y los planos de proyeccion de los objetos se ven mas chicos en el punto focal que en los extremos del
+    plano visual, cuando se trata de la proyeccion lineal de un computador (algo comun en los shooters).<br/> <br/>
+    Las camaras se pueden usar de dos formas, con un eje vertical absoluto, y el resto de los ejes relativos (un shooter,
+    esto significa que al mirar hacia arriba, y luego a la izquierda, rotaras en torno
+    al eje vertical, y no hacia tu izquierda) o con todos los ejes relativos (juego de aviones, rotaras siempre hacia
+    donde lo haces, mirar primero hacia arriba no modificara como rotas en otros ejes), la camara empieza
+    por defecto en el modelo del eje absoluto, por algo de aprender mas rapido (shooter).
+  </div>
+
+  <div id='info-basic-en' class='info-basic-panel info hide'>
+    <h3>Intro to Hiperworld - English (toggle info: i, reload page: f5)</h3>
+
+    Why there are two images? : for the 3D, you can cross your eyes and overlap the images, or get
+    a device that supports 3D to navigate on 3D using your full screen. To learn the other method, that
+    doesnt requires 3D lens or a 3D screen,
+    <a href='http://digital-photography-school.com/9-crazy-cross-eye-3d-photography-images-and-how-to-make-them/'>
+    click here!</a>, or search in the internet ... <br/>
+    Think of this place like an almost endless fourth-dimensional sea, limited only by the
+    maximum precision your computer can give to floating point numbers, and full of little
+    hipercubic fishes. The bigger lines, are part of a grid, a net similar to the ones in math
+    notebooks, but in 4D, this means that instead of a grid made of contiguous squares along
+    their two axis, this is a grid of contiguous hipercubes along their four axis. I put it here
+    trying to have a reference element while moving.
+
+    <h4>Movement : </h4>
+    In 4D there is an extra movement axis (O: lol /o/ /o/  \o\ \o\), i interpreted it this way: <br/>
+    For an organism that evolves in 4D, it probably did along a "surface", its anchored to a higer
+    volume object while moving, this implies it has a vertical axis ('unusable') and three horizontal movement axis,
+    in contrast to two in 3D organism along a surface, thus, there is an axis along the movement (w) (frontal)
+    and two axis perpendicular to the movement, thus the keys would be, x axis: a:left, e:right. z axis:
+    q:left, d:right, and the traditional frontal movement axis: s:backwars, w:onwards. <br/> <br/>
+    This doesnt limits your vertical movement on this demo, just look above and move forward.
+
+    <h4>Rotation : </h4>
+    In 4D the visual field isn´t a plane (plane of view), its a volume (volume of view), this has multiple implications: <br/>
+    4D has 3 rotation axis for its visual field (3D has two: vertical-zy, horizontal-zx) <br/>
+    Mouse rotates by default in 4D horizontal1 (wx) in horizontal axis, and 4D horizontal2 (wz) in its vertical axis <br/>
+    To rotate along 4D vertical (wy) move the mouse vertically while holding secondary click <br/>
+    <br/>
+
+    This implies that when objects move away from the camera, they shrink their proyections volumes along the
+    volume of view, just like 3D objects shrink their projection planes along the plane of view. <br/>
+    You can see that the volumes that where in the ends of the view volume get narrowed when closing to the
+    focal point (the center of the view volume), and then start to grow when moving away, this is the same that
+    happens in 3D when projection planes of objects become smaller when they are directly pointed, when
+    you do it in the linear perspective of a computer game like a shooter. <br/><br/>
+    Cameras can be used in two ways, with a vertical absolute axis, and the rest of the axis relative (a
+    shooter-like camera) to each other, (this means that when looking upwards and then turning lenft, you
+    will rotate along vertical axis, and not your left) o with all axis relative to each other (airplane games,
+    you will rotate always to where yo do it, first looking upwards will not modify how you rotate in other axis),
+    camera starts by default in the absolute axis model (shooter), to learn more quickly how to move.
+  </div>
+  <div id='info-basic-buttons' class='info'>
+    <h3> Botones / buttons : </h3>
+    Alternadores / Toggles: <br/> <br/>
+    Botones/buttons: H <br/>
+    Explicacion/explanation: I <br/>
+    Reiniciar aplicacion/Reload app: F5 <br/>
+    Ocultar mouse/Hide mouse: M <br/>
+    Pantalla completa/Fullscreen: F11 <br/><br/> <br/> <br/>
+    De juego / In-game: <br/> <br/>
+    Movimiento / movement: <br/>
+    Adelante/forward(+W): W <br/>
+    Atras/backwards(-W): S <br/>
+    Izquierda-X/left-X(-X): A <br/>
+    Derecha-X/right-X(+X): E <br/>
+    Izquierda-Z/left-Z(-Z): Q <br/>
+    Derecha-Z/right-Z(+Z): D <br/> <br/>
+    Rotacion / Rotation :<br/>
+    Rotar-WY/Rotate-WY: hold click 2<br/>
+
+  </div>
+</body>
 
 	<!--tipografia -> cambiar a una personal-->
 
@@ -108,7 +217,7 @@
     rel='stylesheet'
     type='text/css'>
   -->
-  
+
 	<!-- font-family: 'Orbitron', sans-serif; font-family: 'Julius Sans One', sans-serif;  -->
 
 	<link rel='stylesheet' type='text/css' href='style.css'>
@@ -121,25 +230,19 @@
 
 	<!--<script type='text/javascript' src="http://connect.soundcloud.com/sdk.js"></script>-->
 	<!--<script src="//cdn.webglstats.com/stat.js" defer="defer" async="async"></script>-->
+<script type='text/javascript' >
 
-	<script type='text/javascript' >
-
-		NGrid.debugging = true;
-		if(navigator.userAgent.match(/FBAN/i) || navigator.userAgent.match(/FBAV/i) ){
-			alert('Estas usando el explorador de facebook, este no esta soportado.\nHas click en los tres puntos en la esquina superior derecha y luego en: "abrir con".\nRecomiendo opera o chrome');
-		}
-		else {
-			NGrid.MusicPorts.SC.available = false;
-			window.addEventListener('load', function() {
-				window.NGrid.init();
-				window.NGrid.loop();
-			} );
-		}
-	</script>
-</head>
-
-<body>
-
-</body>
+  NGrid.debugging = true;
+  if(navigator.userAgent.match(/FBAN/i) || navigator.userAgent.match(/FBAV/i) ){
+    alert('Estas usando el explorador de facebook, este no esta soportado.\nHas click en los tres puntos en la esquina superior derecha y luego en: "abrir con".\nRecomiendo opera o chrome');
+  }
+  else {
+    NGrid.MusicPorts.SC.available = false;
+    window.addEventListener('load', function() {
+      window.NGrid.init();
+      window.NGrid.loop();
+    } );
+  }
+</script>
 
 </html>
