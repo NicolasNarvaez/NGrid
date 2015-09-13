@@ -20,6 +20,15 @@
 
   uniform mat4 uPMVMatrix1;
   uniform mat4 uPMVMatrix2;
+
+  highp mat4 uPMVMatrix;
+
+  uniform mat4 uPMatrix1;
+  uniform mat4 uPMatrix2;
+
+  uniform mat4 uMVMatrix1;
+  uniform mat4 uMVMatrix2;
+
   uniform mat4 uPMVMatrix3D;
 
   varying highp vec4 vColor;
@@ -49,6 +58,14 @@
 
     //just... this!: https://soundcloud.com/kellerkind/sets/dj-mixes
     gl_Position.w *= a_position_v; //repair depth coordinate to generate linear distribution
+    /*
+    vColor = a_color* sqrt(
+      gl_Position.x*gl_Position.x+
+      gl_Position.y*gl_Position.y+
+      gl_Position.z*gl_Position.z+
+      gl_Position.w*gl_Position.w)/1.8;
+*/
+    vColor = a_color;
 
     a_position_v = gl_Position.w; //store depth value
     //already in NDC !!!
@@ -64,14 +81,20 @@
 
     // calculations are realized in the 4th and not the 3th, like face superposition
     //blendeing, etc.
-    vColor = a_color;
+    /*
+    vColor = a_color*(
+      gl_Position.x*gl_Position.x+
+      gl_Position.y*gl_Position.y+
+      gl_Position.z*gl_Position.z+
+      gl_Position.w*gl_Position.w)/1000.0;
+*/
 
     a_position_tmp = gl_Position.w; //store depth value
     gl_Position /= gl_Position.w;
     //manual culling
     //gl_Position.z += 1.0;
     if(
-      a_position_v >= 5.0 ||
+      a_position_v >= 10.0 ||
       a_position_v <= -1.0 ||
 
       gl_Position.x >= 10.0 ||
@@ -105,13 +128,13 @@
     <h3>Intro al Hipermundo - Espa&ntilde;ol (alternar info: i, reiniciar pagina: f5)</h3>
     Por que hay dos imagenes? : para el 3D, puedes cruzar tus ojos y superponer las imagenes, o conseguirte
     un dispositivos que lo soporte para usar el 3D aprovechando tu pantalla completa. Para aprender
-    el metodo anterior de estereoscopia, que no necesita lentes 3D o pantallas 3D, as click
+    el metodo anterior de estereoscopia, que no necesita lentes 3D o pantallas 3D, haz click
     <a href='http://www.taringa.net/posts/info/9454054/Te-enseno-a-ver-en-3D-sin-lentes.html'>
-      aca!</a>, o busca algun recurso por internet ...<br/>
+      ac&aacute;!</a>, o busca algun recurso por internet ...<br/>
     Interpreta este lugar como un oceano cuartidimensional casi infinito, limitado
     por la m&aacute;xima precisi&oacute;n que tu computadora de al punto flotante, y lleno de
     peque&ntilde;os pecesitos hipercubicos. Las lineas mas grandes, son un grid, una malla
-    similar a la rejilla de los cuadernos, pero en 4D, es decir que en ves de una rejilla de
+    similar a la rejilla de los cuadernos, pero en 4D, es decir que en vez de una rejilla de
     cuadrados contiguos en sus dos ejes, esta es una rejilla de hipercubos contiguos en sus 4 ejes.
     Lo puse aqu&iacute; tratando de tener un elemento de referencia al desplazarse.
 
@@ -223,6 +246,7 @@
 	<script type='text/javascript' src='lib/gl-matrix-min.js' ></script>
   <script type='text/javascript' src='lib/NMath.js' ></script>
   <script type='text/javascript' src='lib/twgl-full.min.js' ></script>
+  <script type='text/javascript' src='lib/Input.js' ></script>
   <script type='text/javascript' src='lib/kbObserver.js' ></script>
 	<script type='text/javascript' src='lib/NEngine.js' ></script>
 	<script type='text/javascript' src='lib/NGrid.js' ></script>
