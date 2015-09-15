@@ -1,6 +1,4 @@
-
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>NGrid</title>
@@ -66,7 +64,6 @@
       gl_Position.w*gl_Position.w)/1.8;
 */
     vColor = a_color;
-
     a_position_v = gl_Position.w; //store depth value
     //already in NDC !!!
 
@@ -119,6 +116,7 @@
 	varying highp vec4 vColor;
 	void main(void) {
 	    gl_FragColor = vColor;
+      gl_FragColor.a = 0.5;
 	}
 	</script>
 </head>
@@ -244,11 +242,9 @@
 	<!-- font-family: 'Orbitron', sans-serif; font-family: 'Julius Sans One', sans-serif;  -->
 
 	<link rel='stylesheet' type='text/css' href='style.css'>
-	<script type='text/javascript' src='lib/gl-matrix-min.js' ></script>
   <script type='text/javascript' src='lib/NMath.js' ></script>
   <script type='text/javascript' src='lib/twgl-full.min.js' ></script>
   <script type='text/javascript' src='lib/Input.js' ></script>
-  <script type='text/javascript' src='lib/kbObserver.js' ></script>
 	<script type='text/javascript' src='lib/NEngine.js' ></script>
 	<script type='text/javascript' src='lib/NGrid.js' ></script>
 
