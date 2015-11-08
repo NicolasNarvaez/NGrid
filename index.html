@@ -70,6 +70,7 @@
     /////////////////////////////////////////////////////////////////convert to 3D eyespace
     gl_Position.z += 2.0;
     gl_Position *= 100.0;
+
     gl_Position.w = 1.0;
 
     /////////////////////////////////////////////////////////////////convert to NDC 3D
@@ -116,7 +117,7 @@
 	varying highp vec4 vColor;
 	void main(void) {
 	    gl_FragColor = vColor;
-      gl_FragColor.a = 0.5;
+      gl_FragColor.a = 1.0;
 	}
 	</script>
 </head>
@@ -124,29 +125,41 @@
 <body>
   <div id='game_data'></div>
   <div id='info-basic-es' class='info-basic-panel info hide'>
-    <h3>Intro al Hipermundo - Espa&ntilde;ol (alternar info: i, reiniciar pagina: f5)</h3>
-    Por que hay dos imagenes? : para el 3D, puedes cruzar tus ojos y superponer las imagenes, o conseguirte
-    un dispositivos que lo soporte para usar el 3D aprovechando tu pantalla completa. Para aprender
-    el metodo anterior de estereoscopia, que no necesita lentes 3D o pantallas 3D, haz click
+    <h3>Intro al Hipermundo - Espa&ntilde;ol (alternar info: i, reiniciar
+      pagina: f5)</h3>
+    Por que hay dos imagenes? : para el 3D, puedes cruzar tus ojos y
+    superponer las imagenes, o conseguirte un dispositivos que lo soporte
+    para usar el 3D aprovechando tu pantalla completa. Para aprender
+    el metodo anterior de estereoscopia, que no necesita lentes 3D o
+    pantallas 3D, haz click
     <a href='http://www.taringa.net/posts/info/9454054/Te-enseno-a-ver-en-3D-sin-lentes.html'>
       ac&aacute;!</a>, o busca algun recurso por internet ...<br/>
-    Interpreta este lugar como un oceano cuartidimensional casi infinito, limitado
-    por la m&aacute;xima precisi&oacute;n que tu computadora de al punto flotante, y lleno de
-    peque&ntilde;os pecesitos hipercubicos. Las lineas mas grandes, son un grid, una malla
-    similar a la rejilla de los cuadernos, pero en 4D, es decir que en vez de una rejilla de
-    cuadrados contiguos en sus dos ejes, esta es una rejilla de hipercubos contiguos en sus 4 ejes.
-    Lo puse aqu&iacute; tratando de tener un elemento de referencia al desplazarse.
+    Interpreta este lugar como un oceano cuartidimensional casi
+    infinito, limitado por la m&aacute;xima precisi&oacute;n que tu
+    computadora de al punto flotante, y lleno de peque&ntilde;os pecesitos
+    hipercubicos. Las lineas mas grandes, son un grid, una malla similar a la
+    rejilla de los cuadernos, pero en 4D, es decir que en vez de una rejilla de
+    cuadrados contiguos en sus dos ejes, esta es una rejilla de hipercubos
+    contiguos en sus 4 ejes. Lo puse aqu&iacute; tratando de tener un
+    elemento de referencia al desplazarse.
 
     <h4>Movimiento : </h4>
-    En 4D hay un eje extra de movimiento (O: lol /o/ /o/  \o\ \o\), esto se analizo de la siguiente manera: <br/>
-    Para un organismo que evoluciona en 4D, este probablemente lo hizo sobre una "superficie", esta anclado
-    a un objeto de mayor volumen, sobre el que se desplaza, lo que implica que tiene un eje vertical ("inusable") y tres
-    de movimiento horizontal, a diferencia de dos en los organismos 3d, por lo tanto hay un eje que va en la
-    direccion del movimiento (w) (frontal), y dos ejes de movimiento horizontal perpendiculares a este (z y x), ademas
-    del eje vertical (y), esto hace que ademas de flechas izquierda y derecha, haya que agregar dos mas para el nuevo
-    eje perpendicular al de desplazamiento, asi las flechas serian: eje x: a:izquierda, e: derecha. eje z:
-    q izquierda: d: derecha, ademas del tradicional eje de movimiento frontal: s: atras, w: adelante. <br/> <br/>
-    Esto no limita tu movimiento vertical en este demo, solo mira hacia arriba, y desplazate.
+    En 4D hay un eje extra de movimiento (O: lol /o/ /o/  \o\ \o\), esto se
+    analizo de la siguiente manera: <br/>
+    Para un organismo que evoluciona en 4D, este probablemente lo hizo sobre
+    una "superficie", esta anclado a un objeto de mayor volumen, sobre el que
+    se desplaza, lo que implica que tiene un eje vertical ("inusable") y tres
+    de movimiento horizontal, a diferencia de dos en los organismos 3d, por lo
+    tanto hay un eje que va en la direccion del movimiento (w) (frontal), y
+    dos ejes de movimiento horizontal perpendiculares a este (z y x), ademas
+    del eje vertical (y), esto hace que ademas de flechas izquierda y
+    derecha, haya que agregar dos mas para el nuevo eje perpendicular al de
+    desplazamiento, asi las flechas serian: eje x: a:izquierda, e:
+    derecha. eje z: q izquierda: d: derecha, ademas del tradicional eje de
+    movimiento frontal: s: atras, w: adelante. <br/> <br/>
+    Esto no limita tu movimiento vertical en este demo, solo mira hacia
+    arriba, y desplazate.
+    
     <h4>Rotacion : </h4>
     En 4D el campo visual no es un plano, es un volumen, esto tiene varias implicancias: <br/>
     4D tiene 3 ejes de rotacion del campo visual (3D tiene 2: vertical-zy horizontal-zx) <br/>
