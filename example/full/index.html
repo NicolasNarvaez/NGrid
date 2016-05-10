@@ -10,6 +10,11 @@
 	<meta property="og:image" content="http://archetype-0.cl/ngrid/cover.jpg" />
 	<meta property="og:description" content="El único juego 4D, rápido, psicodélico y neón de la web!" />
 
+  <script id='testshader' type='vs'>
+  highp float vec8;
+
+  </script>
+
 	<script id='vs' type='vs'>
   attribute vec4 a_position;
   highp float a_position_v;
@@ -74,7 +79,7 @@
     gl_Position.w = 1.0;
 
     /////////////////////////////////////////////////////////////////convert to NDC 3D
-    gl_Position = uPMVMatrix3D*gl_Position; //doing *= will do the operation row-vertor type...
+    gl_Position = uPMVMatrix3D*gl_Position; //doing *= will do the operation row-vector type...
     //yes, like if it where fucking undebuggable transposed shit.
 
     // calculations are realized in the 4th and not the 3th, like face superposition
@@ -159,7 +164,7 @@
     movimiento frontal: s: atras, w: adelante. <br/> <br/>
     Esto no limita tu movimiento vertical en este demo, solo mira hacia
     arriba, y desplazate.
-    
+
     <h4>Rotacion : </h4>
     En 4D el campo visual no es un plano, es un volumen, esto tiene varias implicancias: <br/>
     4D tiene 3 ejes de rotacion del campo visual (3D tiene 2: vertical-zy horizontal-zx) <br/>
@@ -255,11 +260,11 @@
 	<!-- font-family: 'Orbitron', sans-serif; font-family: 'Julius Sans One', sans-serif;  -->
 
 	<link rel='stylesheet' type='text/css' href='style.css'>
-  <script type='text/javascript' src='lib/NMath.js' ></script>
-  <script type='text/javascript' src='lib/twgl-full.min.js' ></script>
-  <script type='text/javascript' src='lib/Input.js' ></script>
-	<script type='text/javascript' src='lib/NEngine.js' ></script>
-	<script type='text/javascript' src='lib/NGrid.js' ></script>
+  <script type='text/javascript' src='../../lib/twgl-full.min.js' ></script>
+  <script type='text/javascript' src='../../lib/Input.js' ></script>
+  <script type='text/javascript' src='../../lib/NMath.js' ></script>
+	<script type='text/javascript' src='../../lib/NEngine.js' ></script>
+	<script type='text/javascript' src='../../dist/module/NGrid.js' ></script>
 
 	<!--<script type='text/javascript' src="http://connect.soundcloud.com/sdk.js"></script>-->
 	<!--<script src="//cdn.webglstats.com/stat.js" defer="defer" async="async"></script>-->
@@ -276,6 +281,7 @@
       window.NGrid.loop();
     } );
   }
+
 </script>
 
 </html>

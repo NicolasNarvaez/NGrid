@@ -50,19 +50,22 @@ try {
       vec = null,
       pressed = Input.Keyboard.pressed,
       dt,
-      length=2, grid_size=0, size=1,
+      dt_phy,
+      dt_phy_last,
+      dt_phy_planck = 50,
+      length=2, grid_size=2, size=1,
       world_grid_geom, world_grid = [], world_grid_size = 0, world_grid_length = 300,
-      world_grid_unit_length = 20, world_grid_unit_size = 4,
+      world_grid_unit_length = 5, world_grid_unit_size = 4,
       i_w, i_z, i_y, i_x, obj,
-      enemy_geom0 = NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
-      pointer_geom = NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
+      enemy_geom0 = new NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
+      pointer_geom = new NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
       axis_geom = NEngine.geometry.axis4({size:size}),
-      enemy_geom4 = NEngine.geometry.grid4({size:4, length:size*0.2, wire:true}),
+      enemy_geom4 = new NEngine.geometry.grid4({size:4, length:size*0.2, wire:true}),
       enemy_octahedron0 = NEngine.geometry.octahedron4({size: size/4, wire:true}),
       bullet = NEngine.geometry.simplex4({size:size/2,enemy:false,wire:true}),
       enemy_simplex0 = NEngine.geometry.simplex4({size:size/3,enemy:true, wire:true}),
-      enemy_simplex0 = NEngine.geometry.grid4({size:2, length:size*0.2, wire:true}),
-      //consoke
+      //enemy_simplex0 = new NEngine.geometry.grid4({size:4, length:size*0.2, wire:true}),
+      //console
       config = {
         mouse_rotation : Math.PI/200,
         speed : 1/1000,
@@ -96,7 +99,8 @@ try {
         info_basic_panel_es : document.getElementById('info-basic-es'),
         info_basic_buttons : document.getElementById('info-basic-buttons')
       },
-      pointer;
+      pointer,
+      game_active;
 
     function init(options) {
       if(!options) options = {};
@@ -107,6 +111,7 @@ try {
       var renderer_default = {
         stereo_dim: 4,
 
+        projection_type: 'direct',  //1 proj mat
         projection_near: 0.1,
         projection_far: 1000,
         projection_angle: Math.PI/1.4,
@@ -126,7 +131,7 @@ try {
 
       camera3 = renderer.camera3;
       camera = renderer.camera;
-      camera.p[1] = 0.5;
+      //camera.p[1] = 0.5;
 
       camera.rrx = vec.create();
       camera.rrx[0] = 1.0;
@@ -144,86 +149,126 @@ try {
       camera.rzx = 0.0;
       camera.ryx = 0.0;
 
-      for(i_w=grid_size; i_w--;)
-        for(i_z=grid_size;i_z--;)
-        {
-          for(i_y=grid_size;i_y--;)
-          {
-            for(i_x=grid_size;i_x--;) {
-              //create object
-              //grid = new Obj();
-              grid = new NEngine.Entity();
-              grid.geom = enemy_octahedron0;
-              if(grid_size != 1) {
-                grid.p[0] = length*( i_x/(grid_size-1) - 1/2);
-                grid.p[1] = length*( i_y/(grid_size-1) - 1/2);
-                grid.p[2] = length*( i_z/(grid_size-1) - 1/2);
-                grid.p[3] = length*( i_w/(grid_size-1) - 1/2);
-              }
+      var g = g = new NEngine.geometry.grid4({
+        size: 2,
+        length: 2,
+        wire:true
+      }), g2 = new NEngine.geometry.grid4({
+        size:3,
+        length: 3,
+        wire:true
+      }), g_joined = new NEngine.geometry.Geom(),
+       world_geom = new NEngine.geometry.grid4({
+        size: 3,
+        length: 200,
+        wire:true
+      }), e = new NEngine.Entity(),
+      world = new NEngine.Entity();
+      world.geom = world_geom;
+      renderer.objAdd(world);
 
+    e.geom = g;
+    /*
 
-              grid.sp = 1;
-              enemigos.add(grid);
-              renderer.objAdd(grid);
+     new  NEngine.geometry.grid4({
+        size: 2,
+        length: 80,
+        iteration: function(p, options) {
+          NMath.vec4.copy(e.p, p);
 
-            }
-
-            grid = new NEngine.Entity();
-            grid.geom = enemy_geom4;
-            if(grid_size != 1) {
-              grid.p[0] = length*( i_x/(grid_size-1) - 1/2);
-              grid.p[1] = length*( i_y/(grid_size-1) - 1/2);
-              grid.p[2] = length*( i_z/(grid_size-1) - 1/2);
-              grid.p[3] = length*( i_w/(grid_size-1) - 1/2);
-            }
-            /*
-            grid.sp = 0.5;
-            enemigos.add(grid);
-            renderer.objAdd(grid);
-            */
+          if(options.recursion_ps)
+            for(var i = options.recursion_ps.length; i--;){
+            NMath.vec4.scaleAndAdd(e.p, e.p, options.recursion_ps[i], 0.2/(i+1) )
           }
+          if(options.recursion_depth_current == 0)
+            e.geom = g2;
+          else
+            e.geom= g;
 
+          NEngine.geometry.concat(g_joined,e,true);
+        },
+        functional: true,
+
+        recursion_depth: 1
+      });
+
+    e.geom = g_joined;
+    NEngine.geometry.twglize(e.geom);
+    e.p = [0,0,0,0];
+    renderer.objAdd(e);
+    */
+
+     new  NEngine.geometry.grid4({
+        size: 2,
+        length: 2,
+        iteration: function(p, options) {
+          //create object
+          //grid = new Obj();
           grid = new NEngine.Entity();
-          grid.geom = enemy_simplex0;
-          if(grid_size != 1) {
-            grid.p[0] = length*( i_x/(grid_size-1) - 1/2);
-            grid.p[1] = length*( i_y/(grid_size-1) - 1/2);
-            grid.p[2] = length*( i_z/(grid_size-1) - 1/2);
-            grid.p[3] = length*( i_w/(grid_size-1) - 1/2);
-          }
-          /*
-          grid.sp = 0.8;
-          enemigos.add(grid);
-          renderer.objAdd(grid);
-          */
-        }
+          grid.geom = enemy_octahedron0;
+          if(grid_size != 1)
+            NMath.vec4.copy(grid.p,p);
 
+
+          grid.sp = 1;
+          generators.add(grid);
+          physical.add(grid);
+          renderer.objAdd(grid);
+
+
+
+        },functional: true
+      })
+
+      /*
+      //ascensor
       grid = new NEngine.Entity();
-      grid.geom = NEngine.geometry.grid4({size:1, length:20, wire:true});
-      //grid.p[1] = 12.0;
+      grid.geom = new NEngine.geometry.grid4({size:2, size_x:10, length:2, length_x:20, wire:true});
+      renderer.objAdd(grid);
+      //ascensor
+      grid = new NEngine.Entity();
+      grid.geom = new NEngine.geometry.grid4({size:2, size_z:10, length:2, length_z:20, wire:true});
+      renderer.objAdd(grid);
+      //ascensor
+      grid = new NEngine.Entity();
+      grid.geom = new NEngine.geometry.grid4({size:2, size_w:10, length:2, length_w:20, wire:true});
+      renderer.objAdd(grid);
+      //ascensor
+      grid = new NEngine.Entity();
+      grid.geom = new NEngine.geometry.grid4({size:2, size_y:10, length:2, length_y:20, wire:true});
       renderer.objAdd(grid);
 
       grid = new NEngine.Entity();
-      grid.geom = NEngine.geometry.grid4({size:10, size_y:2, length:20, length_y:2, wire:true});
+      grid.geom = new NEngine.geometry.grid4({size:10, size_y:2, length:20, length_y:4, wire:true});
       grid.p[1] = 12.0;
       //renderer.objAdd(grid);
-
       grid = new NEngine.Entity();
-      grid.geom = NEngine.geometry.grid4({size:10,size_y:2, length:20, length_y:2, wire:true});
+      grid.geom = new NEngine.geometry.grid4({size:4,size_y:2, length:20, length_y:0.5, wire:true});
       grid.p[1] = -2.2;
       //renderer.objAdd(grid);
-
-      grid = new NEngine.Entity();
-      grid.geom = NEngine.geometry.grid4({size:2, size_y:10, length:2, length_y:10, wire:true});
-      //renderer.objAdd(grid);
+      */
 
       pointer = new NEngine.Entity();
       pointer.geom = pointer_geom;
+      //pointer.p= [0,0,0,0];
       renderer.objAdd(pointer);
+
+      /*
+      var op = new NEngine.Entity();
+      op.p[2] = 1;
+      op.geom = new NEngine.geometry.Geom()
+      NEngine.geometry.concat(op.geom, pointer_geom, true);
+      NEngine.geometry.concat(op, pointer_geom, true);
+      NEngine.geometry.concat(op, pointer_geom, true);
+      //op.p[2] = 1;
+      NEngine.geometry.twglize(op.geom)
+      renderer.objAdd(op)
+      console.log(op.geom, pointer_geom)
+      */
 
       axis = new NEngine.Entity();
       axis.geom = axis_geom;
-      //renderer.objAdd(axis);
+      renderer.objAdd(axis);
 
       window.game = {
         pointer: pointer,
@@ -231,28 +276,6 @@ try {
         grid : grid,
         renderer: renderer
       }
-
-
-
-      world_grid_geom =  NEngine.geometry.grid4(
-        {size: world_grid_unit_size,
-          length: world_grid_unit_length, wire:true});
-
-      for(i_w=world_grid_size; i_w--;)
-        for(i_z=world_grid_size;i_z--;)
-          for(i_y=world_grid_size;i_y--;)
-            for(i_x=world_grid_size;i_x--;) {
-              obj = new NEngine.Entity();
-              obj.geom = world_grid_geom;
-
-              obj.p[0] = world_grid_length*( i_x/(world_grid_size-1) - 1/2);
-              obj.p[1] = world_grid_length*( i_y/(world_grid_size-1) - 1/2);
-              obj.p[2] = world_grid_length*( i_z/(world_grid_size-1) - 1/2);
-              obj.p[3] = world_grid_length*( i_w/(world_grid_size-1) - 1/2);
-
-              renderer.objAdd(obj);
-            }
-
       controls.generate();
       set({ mouse_axisRotation:0 });
       set({ config: { camera_disposition_3 : renderer_default.camera_disposition_3 } })
@@ -262,7 +285,6 @@ try {
       ev.keyCode = 72;
       window.dispatchEvent(ev)
     }
-
 
     function set(options) {
       var config_field;
@@ -280,11 +302,35 @@ try {
     }
 
     var iterators = [],
+      generators = new NEngine.obj.iterator(),
       enemigos = new NEngine.obj.iterator(),
-      balas = new NEngine.obj.iterator();
+      balas = new NEngine.obj.iterator(),
+      physical = new NEngine.obj.iterator();
 
     iterators.push(enemigos);
     iterators.push(balas);
+    iterators.push(physical);
+
+    generators.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
+      var child;
+      if(Date.now() > timer_5000) {
+        timer_5000 = Date.now() + 5000;
+
+        for(i=0,length = generators.list.length; i<length;i++)
+          {
+          child = new NEngine.Entity();
+          vec4.copy(child.p, generators.list[i].p);
+          mat4.copy(child.r, generators.list[i].r);
+
+          child.geom = enemy_simplex0;
+          child.sp = 0.5;
+
+          physical.add(child);
+          renderer.objAdd(child);
+        }
+
+      }
+    });
 
     enemigos.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
       //console.log(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
@@ -313,9 +359,31 @@ try {
       }
     });
 
-    //rotar
-    balas.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
+    physical.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
+      //console.log(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
+      //console.log(camera.p, pointer.p);
+      var vecs, ang, dot;
+      tmp_v1[0] = 0;
+      tmp_v1[1] = 0;
+      tmp_v1[2] = 0;
+      tmp_v1[3] = 0.001*dt*obj.sp;
 
+      mat4.multiplyVec(tmp_v2, obj.r, tmp_v1);
+      vec4.add(obj.p, obj.p, tmp_v2);
+
+      vec4.copy(tmp_v1, [0,0,0,1])
+      mat4.multiplyVec(tmp_v2, obj.r, tmp_v1)
+      vec4.sub(tmp_v1, camera.p, obj.p);
+      dot = vec4.angleDot(tmp_v2, tmp_v1);
+      if(dot > Math.PI/1000) {
+        vec4.plane(tmp_v2, tmp_v1);
+        ang = dt*Math.PI/(10000);
+        if(ang > dot)
+          ang = dot;
+
+        mat4.rotationPlane(tmp_m2, tmp_v2, tmp_v1, ang);
+        mat4.multiply(obj.r, tmp_m2, obj.r);
+      }
     });
 
     //wordl related updates -> most to iterators
@@ -363,43 +431,49 @@ try {
         tmp_v1[0] += 1.0;
         tmp_v1[2] += -1.0;
       }
-
-      if(Date.now() > timer_5000) {
-        timer_5000 = Date.now() + 5000;
-
-        for(i=0,length = enemigos.list.length; i<length;i++)
-          if(enemigos.list[i].geom == enemy_octahedron0)
-          {
-          grid = new NEngine.Entity();
-          vec4.copy(grid.p, enemigos.list[i].p);
-          mat4.copy(grid.r, enemigos.list[i].r);
-          grid.geom = enemy_simplex0;
-          grid.sp = 0.5;
-          enemigos.add(grid);
-          renderer.objAdd(grid);
-        }
-      }
-
       if(vec4.length(tmp_v1)) {
         vec4.normalize(tmp_v2, tmp_v1);
         NEngine.obj.camera.walk(camera, tmp_v2, config.speed*dt);
       }
+      //console.log(dt)
       ///////////////////////////////////////////////////////////////////
-
+      generators.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
       enemigos.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
+      physical.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
     }
 
+    //loop instantiation
+    //discrete-known type loops
     function loop() {
+      physicsLoop();
+      animLoop();
+    }
+    dt_phy_planck = 10;
+    //ch
+    function physicsLoop() {
+      if(dt_phy_last === undefined)
+      dt_phy_last = Date.now();
+
+      dt_phy = Date.now() - dt_phy_last;
+
+      if(dt_phy > dt_phy_planck) {
+
+        update(dt_phy);
+        dt_phy_last = Date.now();
+        setTimeout(physicsLoop, 0);
+      }
+    }
+
+    function animLoop() {
       if(last_time === undefined)
         last_time = Date.now();
 
       dt = Date.now() - last_time;
       document.getElementById('game_data').innerHTML='FPS '+(1000/dt)+'<br>'+
       'enemigos: '+enemigos.list.length;
-      update(dt);
+
       renderer.render();
       if(loop_on) {
-
         requestAnimationFrame(loop);
         last_time = last_time + dt;
       }
@@ -563,11 +637,15 @@ try {
       };
     })();
 
+
+
     return {
       MusicPorts: MusicPorts,
       init: init,
       loop: loop,
-      loop_on: loop_on
+      loop_on: loop_on,
+      enemigos: enemigos,
+      renderer: renderer
     };
 	})();
 })();
