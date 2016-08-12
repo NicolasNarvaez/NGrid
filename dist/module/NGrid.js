@@ -55,7 +55,7 @@ try {
       dt_phy_planck = 50,
       length=2, grid_size=2, size=1,
       world_grid_geom, world_grid = [], world_grid_size = 0, world_grid_length = 300,
-      world_grid_unit_length = 5, world_grid_unit_size = 4,
+      world_grid_unit_length = 2, world_grid_unit_size = 2,
       i_w, i_z, i_y, i_x, obj,
       enemy_geom0 = new NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
       pointer_geom = new NEngine.geometry.grid4({size:2, length:size*0.5, wire:true}),
@@ -197,7 +197,7 @@ try {
     e.p = [0,0,0,0];
     renderer.objAdd(e);
     */
-
+    console.log('asd')
      new  NEngine.geometry.grid4({
         size: 2,
         length: 2,
@@ -214,9 +214,6 @@ try {
           generators.add(grid);
           physical.add(grid);
           renderer.objAdd(grid);
-
-
-
         },functional: true
       })
 

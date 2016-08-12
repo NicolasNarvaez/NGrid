@@ -15,12 +15,20 @@ module.exports = function (grunt) {
 					files: ['src/**/*'],
 					tasks: ['copy:src']
 				},
+				project: {
+					files: ['**'],
+					tasks: ['copy:project']
+				}
 			},
 
 			copy: {
 				src: {
 					src: 'src/NGrid.js',
 					dest: 'dist/module/NGrid.js'
+				},
+				project: {
+					src: '**',
+					dest: '/var/www/NGrid/'
 				}
 			}
 		})
@@ -30,5 +38,5 @@ module.exports = function (grunt) {
 		grunt.loadNpmTasks('grunt-contrib-watch');
 
 		grunt.registerTask('default', ['copy:src', 'watch:src'])
-
+		grunt.registerTask('testing', ['copy:project', 'watch:project'])
 }

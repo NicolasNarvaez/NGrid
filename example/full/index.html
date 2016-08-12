@@ -15,6 +15,27 @@
 
   </script>
 
+  <script id='nvs' type='nvs'>
+
+  uniform mat4_n uPMVMatrix;
+
+  attribute vecn a_position;
+  highp float a_position_z;
+
+  attribute vec4 a_color;
+  varying highp vec4 vColor;
+
+  void main(void) {
+    gl_Position = uPMVMatrx*a_position;
+
+    a_position_z = gl_Position.z;
+    gl_Position /= gl_Position.w;
+    gl_Position.z = a_position_z;
+
+    vColor = a_color;
+  }
+  </script>
+
 	<script id='vs' type='vs'>
   attribute vec4 a_position;
   highp float a_position_v;
@@ -281,6 +302,9 @@
       window.NGrid.loop();
     } );
   }
+
+  var nvs = document.getElementById('nvs');
+  console.log(nvs)
 
 </script>
 
