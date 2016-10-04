@@ -110,6 +110,7 @@ try {
       //set renderer
       var renderer_default = {
         stereo_dim: 4,
+		stereo_crossed: true,
 
         projection_type: 'direct',  //1 proj mat
         projection_near: 0.1,
@@ -735,6 +736,10 @@ try {
             case 72: //h
               ui.info_basic_buttons.classList.toggle('hide');
               break;
+			 case 76: //l
+			  renderer.config.stereo_crossed = !renderer.config.stereo_crossed
+			  console.log(renderer.config.stereo_crossed)
+			  break;
           }
           last_time_key = Date.now();
           //e.preventDefault();
