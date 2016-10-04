@@ -150,6 +150,8 @@ try {
       camera.rzx = 0.0;
       camera.ryx = 0.0;
 
+	  camera.p[3] = -15
+
       var g = g = new NEngine.geometry.grid4({
         size: 2,
         length: 2,
@@ -240,6 +242,11 @@ try {
 
          },functional: true
        })
+	   var g_1 = new NEngine.geometry.grid4({size:4, size_x:20, length:2, length_x:40, wire:true}),
+	   	g_2 = new NEngine.geometry.grid4({size:4, size_z:20, length:2, length_z:40, wire:true}),
+		g_3 = new NEngine.geometry.grid4({size:4, size_w:20, length:2, length_w:40, wire:true}),
+		g_4 = new NEngine.geometry.grid4({size:4, size_y:20, length:2, length_y:40, wire:true})
+
        new  NEngine.geometry.grid4({
                 size: 4,
                 length: 550,
@@ -249,23 +256,23 @@ try {
                   if(grid_size == 1) return
                   //ascensor
                   grid = new NEngine.Entity();
-                  grid.geom = new NEngine.geometry.grid4({size:4, size_x:20, length:2, length_x:40, wire:true});
+                  grid.geom = g_1
                   vec4.copy(grid.p, p)
                   p = grid.p
                   renderer.objAdd(grid);
                   //ascensor
                   grid = new NEngine.Entity();
-                  grid.geom = new NEngine.geometry.grid4({size:4, size_z:20, length:2, length_z:40, wire:true});
+                  grid.geom = g_2;
                   grid.p = p
                   renderer.objAdd(grid);
                   //ascensor
                   grid = new NEngine.Entity();
-                  grid.geom = new NEngine.geometry.grid4({size:4, size_w:20, length:2, length_w:40, wire:true});
+                  grid.geom = g_3;
                   grid.p = p
                   renderer.objAdd(grid);
                   //ascensor
                   grid = new NEngine.Entity();
-                  grid.geom = new NEngine.geometry.grid4({size:4, size_y:20, length:2, length_y:40, wire:true});
+                  grid.geom = g_4;
                   grid.p = p
                   renderer.objAdd(grid);
 
