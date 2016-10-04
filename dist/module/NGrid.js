@@ -68,7 +68,7 @@ try {
       //console
       config = {
         mouse_rotation : Math.PI/200,
-        speed : 1/1000,
+        speed : 1/100,
         camera_rotation: 'absolute',
         camera_rotation_y: 'normal',
         camera_rotation_absolute_y_amplitud: Math.PI/2,
@@ -159,8 +159,8 @@ try {
         wire:true
       }), g_joined = new NEngine.geometry.Geom(),
        world_geom = new NEngine.geometry.grid4({
-        size: 3,
-        length: 200,
+        size: 4,
+        length: 400,
         wire:true
       }), e = new NEngine.Entity(),
       world = new NEngine.Entity();
@@ -197,27 +197,79 @@ try {
     e.p = [0,0,0,0];
     renderer.objAdd(e);
     */
-    console.log('asd')
+    var geom
+
+    geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
      new  NEngine.geometry.grid4({
-        size: 2,
-        length: 2,
+        size: 3,
+        length: 4,
         iteration: function(p, options) {
           //create object
           //grid = new Obj();
           grid = new NEngine.Entity();
-          grid.geom = enemy_octahedron0;
+          grid.geom = geom
           if(grid_size != 1)
             NMath.vec4.copy(grid.p,p);
 
 
           grid.sp = 1;
+          enemigos.add(grid);
           generators.add(grid);
-          physical.add(grid);
+          randoms.add(grid);
           renderer.objAdd(grid);
+
         },functional: true
       })
 
-      /*
+      geom = geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
+      new  NEngine.geometry.grid4({
+         size: 3,
+         length: 80,
+         iteration: function(p, options) {
+           var p
+
+
+           if(grid_size == 1) return
+           //ascensor
+           grid = new NEngine.Entity();
+           grid.geom = geom;
+           vec4.copy(grid.p, p)
+           p = grid.p
+           renderer.objAdd(grid);
+
+         },functional: true
+       })
+       new  NEngine.geometry.grid4({
+                size: 4,
+                length: 550,
+                iteration: function(p, options) {
+                  var p
+
+                  if(grid_size == 1) return
+                  //ascensor
+                  grid = new NEngine.Entity();
+                  grid.geom = new NEngine.geometry.grid4({size:4, size_x:20, length:2, length_x:40, wire:true});
+                  vec4.copy(grid.p, p)
+                  p = grid.p
+                  renderer.objAdd(grid);
+                  //ascensor
+                  grid = new NEngine.Entity();
+                  grid.geom = new NEngine.geometry.grid4({size:4, size_z:20, length:2, length_z:40, wire:true});
+                  grid.p = p
+                  renderer.objAdd(grid);
+                  //ascensor
+                  grid = new NEngine.Entity();
+                  grid.geom = new NEngine.geometry.grid4({size:4, size_w:20, length:2, length_w:40, wire:true});
+                  grid.p = p
+                  renderer.objAdd(grid);
+                  //ascensor
+                  grid = new NEngine.Entity();
+                  grid.geom = new NEngine.geometry.grid4({size:4, size_y:20, length:2, length_y:40, wire:true});
+                  grid.p = p
+                  renderer.objAdd(grid);
+
+                },functional: true
+              })
       //ascensor
       grid = new NEngine.Entity();
       grid.geom = new NEngine.geometry.grid4({size:2, size_x:10, length:2, length_x:20, wire:true});
@@ -236,36 +288,29 @@ try {
       renderer.objAdd(grid);
 
       grid = new NEngine.Entity();
-      grid.geom = new NEngine.geometry.grid4({size:10, size_y:2, length:20, length_y:4, wire:true});
+      grid.geom = new NEngine.geometry.grid4({size:10, size_y:2, length:2, length_y:4, wire:true});
       grid.p[1] = 12.0;
       //renderer.objAdd(grid);
+
       grid = new NEngine.Entity();
-      grid.geom = new NEngine.geometry.grid4({size:4,size_y:2, length:20, length_y:0.5, wire:true});
+      grid.geom = new NEngine.geometry.grid4({size:4,size_y:2, length:2, length_y:0.5, wire:true});
       grid.p[1] = -2.2;
       //renderer.objAdd(grid);
-      */
 
       pointer = new NEngine.Entity();
       pointer.geom = pointer_geom;
       //pointer.p= [0,0,0,0];
-      renderer.objAdd(pointer);
+      //renderer.objAdd(pointer);
+
+
+
+
 
       /*
-      var op = new NEngine.Entity();
-      op.p[2] = 1;
-      op.geom = new NEngine.geometry.Geom()
-      NEngine.geometry.concat(op.geom, pointer_geom, true);
-      NEngine.geometry.concat(op, pointer_geom, true);
-      NEngine.geometry.concat(op, pointer_geom, true);
-      //op.p[2] = 1;
-      NEngine.geometry.twglize(op.geom)
-      renderer.objAdd(op)
-      console.log(op.geom, pointer_geom)
-      */
-
       axis = new NEngine.Entity();
       axis.geom = axis_geom;
       renderer.objAdd(axis);
+      */
 
       window.game = {
         pointer: pointer,
@@ -302,11 +347,13 @@ try {
       generators = new NEngine.obj.iterator(),
       enemigos = new NEngine.obj.iterator(),
       balas = new NEngine.obj.iterator(),
-      physical = new NEngine.obj.iterator();
+      physical = new NEngine.obj.iterator(),
+      randoms = new NEngine.obj.iterator();
 
     iterators.push(enemigos);
     iterators.push(balas);
     iterators.push(physical);
+    iterators.push(randoms);
 
     generators.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
       var child;
@@ -322,7 +369,7 @@ try {
           child.geom = enemy_simplex0;
           child.sp = 0.5;
 
-          physical.add(child);
+          randoms.add(child);
           renderer.objAdd(child);
         }
 
@@ -354,6 +401,84 @@ try {
         mat4.rotationPlane(tmp_m2, tmp_v2, tmp_v1, ang);
         mat4.multiply(obj.r, tmp_m2, obj.r);
       }
+    });
+    randoms.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
+        //console.log(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
+        //console.log(camera.p, pointer.p);
+        var vecs, ang, dot, rand_dir, sp;
+        sp = obj.sp;
+
+        //move forward
+        tmp_v1[0] = 0;
+        tmp_v1[1] = 0;
+        tmp_v1[2] = 0;
+        tmp_v1[3] = 0.001*dt*sp;  //amount to move forward
+
+        mat4.multiplyVec(tmp_v2, obj.r, tmp_v1);
+        vec4.add(obj.p, obj.p, tmp_v2); //move object forward
+
+
+        //ensure main rand_dir vector
+        if(!obj.rand_dir) {
+          rand_dir = obj.rand_dir = vec4.create()
+          vec4.copy(rand_dir, [
+            Math.random()-0.5,
+            Math.random()-0.5,
+            Math.random()-0.5,
+            0,
+          ])
+          vec4.normalizeI(rand_dir)
+          //console.log(rand_dir)
+        }
+        rand_dir = obj.rand_dir
+
+        //randomize randir
+        vec4.copy(tmp_v1, [
+          Math.random()-0.5,
+          Math.random()-0.5,
+          Math.random()-0.5,
+          0,
+        ])
+        vec4.normalizeI(tmp_v1)
+        vec4.scaleAndAdd(rand_dir, rand_dir, tmp_v1, 0.01*dt*sp)
+        vec4.normalizeI(rand_dir)
+
+        //console.log(rand_dir, vec4.length(rand_dir))
+        //apply acumulated rand_dir rotation
+        //get frontal vector
+        vec4.copy(tmp_v1, [0,0,0,1])
+        mat4.multiplyVec(tmp_v2, obj.r, tmp_v1)
+        mat4.multiplyVec(tmp_v1, obj.r, rand_dir);
+        //get rotation angle
+        dot = vec4.angleDot(tmp_v2, tmp_v1);
+        //console.log(rand_dir)
+        if(dot > Math.PI/1000) {
+          vec4.plane(tmp_v2, tmp_v1);
+          ang = dt*Math.PI/(10000);
+          if(ang > dot)
+            ang = dot;
+
+          //console.log(rand_dir, ang)
+          //apply rotation
+          mat4.rotationPlane(tmp_m2, tmp_v2, tmp_v1, ang);
+          mat4.multiply(obj.r, tmp_m2, obj.r);
+          mat4.orthogonalizeI(obj.r)
+        }
+        /*
+        vec4.copy(tmp_v1, [0,0,0,1])
+        mat4.multiplyVec(tmp_v2, obj.r, tmp_v1)
+        vec4.sub(tmp_v1, camera.p, obj.p);
+        dot = vec4.angleDot(tmp_v2, tmp_v1);
+        if(dot > Math.PI/1000) {
+          vec4.plane(tmp_v2, tmp_v1);
+          ang = dt*Math.PI/(10000);
+          if(ang > dot)
+            ang = dot;
+
+          mat4.rotationPlane(tmp_m2, tmp_v2, tmp_v1, ang);
+          mat4.multiply(obj.r, tmp_m2, obj.r);
+        }
+        */
     });
 
     physical.add_pass(function(obj, tmp_v1, tmp_v2, tmp_m1, tmp_m2) {
@@ -437,6 +562,7 @@ try {
       generators.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
       enemigos.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
       physical.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
+      randoms.pass(tmp_v1, tmp_v2, tmp_m1, tmp_m2);
     }
 
     //loop instantiation
