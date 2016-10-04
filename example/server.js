@@ -2,6 +2,11 @@ var cfg = require('./cfg.js'),
   express = require('express'),
   app = express();
 
+app.use(function(req, res, next) {
+	console.log('processing a request')
+	next()
+})
+
 app.use('/lib', express.static("../lib"))
 app.use('/dist', express.static("../dist"))
 app.use('/',  express.static("./full"))
