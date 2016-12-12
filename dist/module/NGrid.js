@@ -204,7 +204,7 @@ try {
 
     geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
      new  NEngine.geometry.grid4({
-        size: 3,
+        size: 2,
         length: 4,
         iteration: function(p, options) {
           //create object

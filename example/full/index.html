@@ -11,8 +11,10 @@
 	<meta property="og:description" content="El único juego 4D, rápido, psicodélico y neón de la web!" />
 
   <script id='testshader' type='vs'>
-  highp float vec8;
+	highp float vec_map  = vec9( 0.0, 0.0, 0.0,  0.0, 0.0, 0.0,  0.0, 0.0, 0.0) + r_6/10.0 ,
+		terrain = vec5(0.0, 0.0, 0.0,   0.0, 0.0);
 
+	highp uniform mat4_n uPMVMatrix;
   </script>
 
   <script id='nvs' type='nvs'>
