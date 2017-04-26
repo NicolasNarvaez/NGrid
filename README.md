@@ -1,7 +1,9 @@
 # NGrid
 The only 4-dimensional, fast, psychedelic, neon-like game in the web! (or 3D if you dont go well with 4D).
 
-If you only want to test it, download the software and open index.html in your (updated) browser of choice, remember to keep pressed right-click if you want to change the view-rotation axis.
+You can try a demo [here](http://www.ngrid.cl)
+
+Download the software and open index.html in your (updated) browser of choice, remember to keep pressed right-click if you want to change the view-rotation axis.
 
 Simple instructions: view rotation in 4D is 3-Dimensional(because of a view volume: horizontal, vertical, frontal), contrary to 3D view-rotation being 2-Dimensional (because of a view plane: horizontal, vertical).
 

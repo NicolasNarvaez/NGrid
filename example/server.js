@@ -17,5 +17,6 @@ app.use('/dist', express.static("../dist"))
 app.use('/',  express.static("./full"))
 
 
-app.listen(cfg.port)
+var server = app.listen(cfg.port)
+// console.log(server)
 console.log("running in "+cfg.port)

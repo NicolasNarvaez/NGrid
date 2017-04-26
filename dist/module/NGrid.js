@@ -68,7 +68,7 @@ try {
       //console
       config = {
         mouse_rotation : Math.PI/200,
-        speed : 1/100,
+        speed : 1/10,
         camera_rotation: 'absolute',
         camera_rotation_y: 'normal',
         camera_rotation_absolute_y_amplitud: Math.PI/2,
@@ -119,7 +119,7 @@ try {
         projection_3: 'ortogonal',
         projection_3_near: 1,
         projection_3_far: 200,
-        projection_3_perspective_angle: Math.PI/2,
+        projection_3_perspective_angle: Math.PI/1.8,
 
         camera_disposition_3: 'hexagon',
       };
@@ -151,26 +151,186 @@ try {
       camera.ryx = 0.0;
 
 	  camera.p[3] = -15
+/*
+	  var g = g = new NEngine.geometry.grid4({
+	          size: 2,
+	          length: 2,
+	          wire:true
+	        }), g2 = new NEngine.geometry.grid4({
+	          size:3,
+	          length: 3,
+	          wire:true
+	        }), g_joined = new NEngine.geometry.Geom(),
+	         world_geom = new NEngine.geometry.grid4({
+	          size: 2,
+	          length: 200,
+	          wire:true
+	        }), e = new NEngine.Entity(),
+	        world = new NEngine.Entity();
+	        world.geom = world_geom;
+	        renderer.objAdd(world);
 
-      var g = g = new NEngine.geometry.grid4({
-        size: 2,
-        length: 2,
-        wire:true
-      }), g2 = new NEngine.geometry.grid4({
-        size:3,
-        length: 3,
-        wire:true
-      }), g_joined = new NEngine.geometry.Geom(),
-       world_geom = new NEngine.geometry.grid4({
-        size: 4,
+	      e.geom = g;
+		  */
+	      /*
+
+	       new  NEngine.geometry.grid4({
+	          size: 2,
+	          length: 80,
+	          iteration: function(p, options) {
+	            NMath.vec4.copy(e.p, p);
+
+	            if(options.recursion_ps)
+	              for(var i = options.recursion_ps.length; i--;){
+	              NMath.vec4.scaleAndAdd(e.p, e.p, options.recursion_ps[i], 0.2/(i+1) )
+	            }
+	            if(options.recursion_depth_current == 0)
+	              e.geom = g2;
+	            else
+	              e.geom= g;
+
+	            NEngine.geometry.concat(g_joined,e,true);
+	          },
+	          functional: true,
+
+	          recursion_depth: 1
+	        });
+
+	      e.geom = g_joined;
+	      NEngine.geometry.twglize(e.geom);
+	      e.p = [0,0,0,0];
+	      renderer.objAdd(e);
+	      */
+/*
+	       new  NEngine.geometry.grid4({
+	          size: 3,
+	          length: 4,
+	          iteration: function(p, options) {
+	            //create object
+	            //grid = new Obj();
+	            grid = new NEngine.Entity();
+	            grid.geom = enemy_octahedron0;
+	            if(grid_size != 1)
+	              NMath.vec4.copy(grid.p,p);
+
+	            grid.sp = 1;
+	            enemigos.add(grid);
+	            generators.add(grid);
+	            randoms.add(grid);
+	            renderer.objAdd(grid);
+
+	          },functional: true
+	        })
+
+
+	        new  NEngine.geometry.grid4({
+	           size: 3,
+	           length: 80,
+	           iteration: function(p, options) {
+	             var p,
+	             geom = NEngine.geometry.simplex4({size: 5,enemy:true, wire:true})
+	             geom = NEngine.geometry.octahedron4({size: 5, wire:true})
+	             geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
+
+	             if(grid_size == 1) return
+	             //ascensor
+	             grid = new NEngine.Entity();
+	             grid.geom = geom;
+	             vec4.copy(grid.p, p)
+	             p = grid.p
+	             renderer.objAdd(grid);
+
+	           },functional: true
+	         })
+			 */
+			 /*
+	         new  NEngine.geometry.grid4({
+	                  size: 3,
+	                  length: 80,
+	                  iteration: function(p, options) {
+	                    var p
+
+	                    if(grid_size == 1) return
+	                    //ascensor
+	                    grid = new NEngine.Entity();
+	                    grid.geom = new NEngine.geometry.grid4({size:2, size_x:10, length:2, length_x:40, wire:true});
+	                    vec4.copy(grid.p, p)
+	                    p = grid.p
+	                    renderer.objAdd(grid);
+	                    //ascensor
+	                    grid = new NEngine.Entity();
+	                    grid.geom = new NEngine.geometry.grid4({size:2, size_z:10, length:2, length_z:40, wire:true});
+	                    grid.p = p
+	                    renderer.objAdd(grid);
+	                    //ascensor
+	                    grid = new NEngine.Entity();
+	                    grid.geom = new NEngine.geometry.grid4({size:2, size_w:10, length:2, length_w:40, wire:true});
+	                    grid.p = p
+	                    renderer.objAdd(grid);
+	                    //ascensor
+	                    grid = new NEngine.Entity();
+	                    grid.geom = new NEngine.geometry.grid4({size:2, size_y:10, length:2, length_y:40, wire:true});
+	                    grid.p = p
+	                    renderer.objAdd(grid);
+
+	                  },functional: true
+	                })
+	        //ascensor
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:2, size_x:10, length:2, length_x:20, wire:true});
+	        renderer.objAdd(grid);
+	        //ascensor
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:2, size_z:10, length:2, length_z:20, wire:true});
+	        renderer.objAdd(grid);
+	        //ascensor
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:2, size_w:10, length:2, length_w:20, wire:true});
+	        renderer.objAdd(grid);
+	        //ascensor
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:2, size_y:10, length:2, length_y:20, wire:true});
+	        renderer.objAdd(grid);
+
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:10, size_y:2, length:2, length_y:4, wire:true});
+	        grid.p[1] = 12.0;
+	        //renderer.objAdd(grid);
+
+	        grid = new NEngine.Entity();
+	        grid.geom = new NEngine.geometry.grid4({size:4,size_y:2, length:2, length_y:0.5, wire:true});
+	        grid.p[1] = -2.2;
+	        //renderer.objAdd(grid);
+
+	        pointer = new NEngine.Entity();
+	        pointer.geom = pointer_geom;
+	        //pointer.p= [0,0,0,0];
+	        //renderer.objAdd(pointer);
+			*/
+
+    //   var g = g = new NEngine.geometry.grid4({
+    //     size: 2,
+    //     length: 2,
+    //     wire:true
+    //   }), g2 = new NEngine.geometry.grid4({
+    //     size:3,
+    //     length: 3,
+    //     wire:true
+	// }), g_joined = new NEngine.geometry.Geom();
+
+	  var world_geom = new NEngine.geometry.grid4({
+        size: 3,
         length: 400,
         wire:true
-      }), e = new NEngine.Entity(),
-      world = new NEngine.Entity();
+	})//, e = new NEngine.Entity()
+
+      var world = new NEngine.Entity();
       world.geom = world_geom;
       renderer.objAdd(world);
 
-    e.geom = g;
+    // e.geom = g;
+
+
     /*
 
      new  NEngine.geometry.grid4({
@@ -202,9 +362,13 @@ try {
     */
     var geom
 
-    geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
+    geom = new NEngine.geometry.grid4({size:2, length:6, wire:true});
+	grid = new NEngine.Entity();
+	grid.geom = geom
+	renderer.objAdd(grid);
+	/*
      new  NEngine.geometry.grid4({
-        size: 2,
+        size: 3,
         length: 4,
         iteration: function(p, options) {
           //create object
@@ -223,10 +387,11 @@ try {
 
         },functional: true
       })
-
+	  */
+	  /*
       geom = geom = new NEngine.geometry.grid4({size:4, length:6, wire:true});
       new  NEngine.geometry.grid4({
-         size: 3,
+         size: 5,
          length: 80,
          iteration: function(p, options) {
            var p
@@ -242,13 +407,15 @@ try {
 
          },functional: true
        })
-	   var g_1 = new NEngine.geometry.grid4({size:4, size_x:20, length:2, length_x:40, wire:true}),
-	   	g_2 = new NEngine.geometry.grid4({size:4, size_z:20, length:2, length_z:40, wire:true}),
-		g_3 = new NEngine.geometry.grid4({size:4, size_w:20, length:2, length_w:40, wire:true}),
-		g_4 = new NEngine.geometry.grid4({size:4, size_y:20, length:2, length_y:40, wire:true})
+	   */
 
+	   var g_1 = new NEngine.geometry.grid4({size:4, size_x:4, length:2, length_x:40, wire:true}),
+	   	g_2 = new NEngine.geometry.grid4({size:4, size_z:4, length:2, length_z:40, wire:true}),
+		g_3 = new NEngine.geometry.grid4({size:4, size_w:4, length:2, length_w:40, wire:true}),
+		g_4 = new NEngine.geometry.grid4({size:4, size_y:4, length:2, length_y:40, wire:true})
+/*
        new  NEngine.geometry.grid4({
-                size: 4,
+                size: 6,
                 length: 550,
                 iteration: function(p, options) {
                   var p
@@ -278,6 +445,8 @@ try {
 
                 },functional: true
               })
+			  */
+/*
       //ascensor
       grid = new NEngine.Entity();
       grid.geom = new NEngine.geometry.grid4({size:2, size_x:10, length:2, length_x:20, wire:true});
@@ -312,7 +481,7 @@ try {
 
 
 
-
+*/
 
       /*
       axis = new NEngine.Entity();
