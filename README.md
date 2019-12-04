@@ -1,7 +1,7 @@
 # NGrid
 The only 4-dimensional, fast, psychedelic, neon-like game in the web! (or 3D if you dont go well with 4D).
 
-You can try a demo [here](http://www.ngrid.cl)
+You can try a demo [here](https://asd.hackman.cl/)
 
 Download the software and open index.html in your (updated) browser of choice, remember to keep pressed right-click if you want to change the view-rotation axis.
 
